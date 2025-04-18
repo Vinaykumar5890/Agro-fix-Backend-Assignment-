@@ -1,244 +1,129 @@
-# Todo Application
+# Agro Fix Backend 
 
-Given an `app.js` file and an empty database file `todoApplication.db`.
+Given an `app.js` file and an empty database file `agro.db`.
 
 Create a table with the name `todo` with the following columns,
 
-**Todo Table**
+**Users Table**
 
 | Column   | Type    |
 | -------- | ------- |
-| id       | INTEGER |
-| todo     | TEXT    |
-| priority | TEXT    |
-| status   | TEXT    |
+| id       | VARCHAR |
+| username | VARCHAR |
+| email    | VARCHAR |
+| password | VARCHAR |
 
-and write APIs to perform operations on the table `todo`,
 
-<MultiLineNote>
-  
-  - Replace the spaces in URL with `%20`.
-  - Possible values for `priority` are `HIGH`, `MEDIUM`, and `LOW`.
-  - Possible values for `status` are `TO DO`, `IN PROGRESS`, and `DONE`.
-</MultiLineNote>
+**Products Table**
 
-### API 1
+| Column     | Type    |
+| ---------- | ------- |
+| id         | VARCHAR |
+| name       | VARCHAR |
+| price      |  INT    | 
+| image      | VARCHAR |
+| category   | VARCHAR |
+| descripiton| VARCHAR |  
 
-#### Path: `/todos/`
+**Orders Table**
 
-#### Method: `GET`
+| Column           | Type    |
+| ---------------- | ------- |
+| id               | VARCHAR |
+| buyer_name       | TEXT    |
+| buyer_contact    | TEXT    | 
+| delivery_address | TEXT    |
+| items            | TEXT    |
+| status           | TEXT    |
 
-- **Scenario 1**
 
-  - **Sample API**
-    ```
-    /todos/?status=TO%20DO
-    ```
-  - **Description**:
 
-    Returns a list of all todos whose status is 'TO DO'
+and write APIs to perform operations on the table `users`, `products`,`orders`;
 
-  - **Response**
 
-    ```
-    [
-      {
-        id: 1,
-        todo: "Watch Movie",
-        priority: "LOW",
-        status: "TO DO"
-      },
-      ...
-    ]
-    ```
+AgroShop is a RESTful API built using **Node.js**, **Express**, and **SQLite**. It supports user authentication, product management, and order placement features. Ideal for small-scale eCommerce or inventory-based apps.
 
-- **Scenario 2**
+---
 
-  - **Sample API**
-    ```
-    /todos/?priority=HIGH
-    ```
-  - **Description**:
+## 🚀 Features
 
-    Returns a list of all todos whose priority is 'HIGH'
+- 🔐 User registration & login with JWT-based authentication
+- 🛍️ Admin: Add, update, delete, and view all products
+- 📦 Customers: Place orders with delivery details and cart items
+- 📋 Admin: View and manage all orders
+- 📞 Customers: Track order status using contact number
 
-  - **Response**
+---
 
-    ```
-    [
-      {
-        id: 2,
-        todo: "Learn Node JS",
-        priority: "HIGH",
-        status: "IN PROGRESS"
-      },
-      ...
-    ]
-    ```
+## ⚙️ Technologies Used
 
-- **Scenario 3**
+- Node.js
+- Express.js
+- SQLite (via `sqlite3` and `sqlite` packages)
+- bcrypt for password hashing
+- JWT for secure authentication
+- UUID for unique IDs
+- CORS middleware
 
-  - **Sample API**
-    ```
-    /todos/?priority=HIGH&status=IN%20PROGRESS
-    ```
-  - **Description**:
+---
 
-    Returns a list of all todos whose priority is 'HIGH' and status is 'IN PROGRESS'
+## 🧑‍💻 API Endpoints
 
-  - **Response**
+### ✅ Auth
+| Method | Endpoint       | Description          |
+|--------|----------------|----------------------|
+| POST   | `/register`     | Register new user    |
+| POST   | `/login`        | Login & get JWT token|
 
-    ```
-    [
-      {
-        id: 2,
-        todo: "Learn Node JS",
-        priority: "HIGH",
-        status: "IN PROGRESS"
-      },
-      ...
-    ]
-    ```
+---
 
-- **Scenario 4**
+### 📦 Products
 
-  - **Sample API**
-    ```
-    /todos/?search_q=Play
-    ```
-  - **Description**:
+| Method | Endpoint            | Access | Description              |
+|--------|---------------------|--------|--------------------------|
+| GET    | `/product`          | Public | View all products        |
+| GET    | `/product/:id`      | Public | View product by ID       |
+| POST   | `/product`          | Admin  | Add a new product        |
+| PUT    | `/product/:id`      | Admin  | Update product           |
+| DELETE | `/product/:id`      | Admin  | Delete product           |
 
-    Returns a list of all todos whose todo contains 'Play' text
+---
 
-  - **Response**
+### 🛒 Orders
 
-    ```
-    [
-      {
-        id: 4,
-        todo: "Play volleyball",
-        priority: "MEDIUM",
-        status: "DONE"
-      },
-      ...
-    ]
-    ```
+| Method | Endpoint                     | Access      | Description                        |
+|--------|------------------------------|-------------|------------------------------------|
+| POST   | `/api/orders`                | Public      | Place a new order                  |
+| GET    | `/api/orders/:id`            | Public      | View single order by ID            |
+| GET    | `/api/orders/user/:contact`  | Public      | View user orders via contact number|
+| GET    | `/api/orders`                | Admin       | View all orders                    |
+| PUT    | `/api/orders/:id`            | Admin       | Update order status                |
 
-### API 2
+---
 
-#### Path: `/todos/:todoId/`
+## 🛡️ Authentication
 
-#### Method: `GET`
+All protected routes require a **JWT token** in the `Authorization` header:
+Authorization: Bearer <token>
 
-#### Description:
+yaml
+Copy
+Edit
 
-Returns a specific todo based on the todo ID
+---
 
-#### Response
+## 🛠️ Installation & Setup
 
-```
-{
-  id: 2,
-  todo: "Learn JavaScript",
-  priority: "HIGH",
-  status: "DONE"
-}
-```
+```bash
+# 1. Clone the repo
+git clone https://github.com/yourusername/agroshop-backend.git
+cd agroshop-backend
 
-### API 3
+# 2. Install dependencies
+npm install
 
-#### Path: `/todos/`
-
-#### Method: `POST`
-
-#### Description:
-
-Create a todo in the todo table,
-
-#### Request
-
-```
-{
-  "id": 10,
-  "todo": "Finalize event theme",
-  "priority": "LOW",
-  "status": "TO DO"
-}
-```
-
-#### Response
-
-```
-Todo Successfully Added
-```
-
-### API 4
-
-#### Path: `/todos/:todoId/`
-
-#### Method: `PUT`
-
-#### Description:
-
-Updates the details of a specific todo based on the todo ID
-
-- **Scenario 1**
-
-  - **Request**
-    ```
-    {
-      "status": "DONE"
-    }
-    ```
-  - **Response**
-
-    ```
-    Status Updated
-    ```
-
-- **Scenario 2**
-
-  - **Request**
-    ```
-    {
-      "priority": "HIGH"
-    }
-    ```
-  - **Response**
-
-    ```
-    Priority Updated
-    ```
-
-- **Scenario 3**
-
-  - **Request**
-    ```
-    {
-      "todo": "Some task"
-    }
-    ```
-  - **Response**
-
-    ```
-    Todo Updated
-    ```
-
-### API 5
-
-#### Path: `/todos/:todoId/`
-
-#### Method: `DELETE`
-
-#### Description:
-
-Deletes a todo from the todo table based on the todo ID
-
-#### Response
-
-```
-Todo Deleted
-```
+# 3. Run the server
+nodemon  app.js
 
 <br/>
 
