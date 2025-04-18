@@ -81,11 +81,11 @@ AgroShop is a RESTful API built using **Node.js**, **Express**, and **SQLite**. 
 
 | Method | Endpoint            | Access | Description              |
 |--------|---------------------|--------|--------------------------|
-| GET    | `/product`          | Public | View all products        |
-| GET    | `/product/:id`      | Public | View product by ID       |
-| POST   | `/product`          | Admin  | Add a new product        |
-| PUT    | `/product/:id`      | Admin  | Update product           |
-| DELETE | `/product/:id`      | Admin  | Delete product           |
+| GET    | `/products`          | Public | View all products        |
+| GET    | `/products/:id`      | Public | View product by ID       |
+| POST   | `/products`          | Admin  | Add a new product        |
+| PUT    | `/products/:id`      | Admin  | Update product           |
+| DELETE | `/products/:id`      | Admin  | Delete product           |
 
 ---
 
@@ -116,7 +116,7 @@ Edit
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/yourusername/agroshop-backend.git
+git clone https://github.com/Vinaykumar5890/Agro-fix-Backend-Assignment-
 cd agroshop-backend
 
 # 2. Install dependencies
