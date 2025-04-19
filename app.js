@@ -13,6 +13,10 @@ const app = express()
 app.use(express.json())
 
 app.use(cors({origin: '*'}))
+app.use(cors({
+  origin: "https://devaragarivinaykumar9e8qdrjscpw369f.drops.nxtwave.tech/", // or your frontend domain
+  credentials: true
+}));
 let database = null
 
 const initializeDbAndServer = async () => {
